@@ -2,7 +2,7 @@
 ## 介绍
 亲爱的刀库塔，你好！<br>
 
-这位农民是基于[Airtest项目](https://airtest.netease.com/)([GitHub](https://github.com/AirtestProject/Airtest))编写的。<br>
+这位农民是基于[Airtest项目](https://airtest.netease.com/)([GitHub](https://github.com/AirtestProject/Airtest))编写的，release使用[pyinstaller](https://www.pyinstaller.org/)打包。<br>
 目前功能有：<br>
 >1: 刷图<br>
  2: 聘用公开招募<br>
@@ -11,7 +11,7 @@
 
 ## 运行
 目前release提供了Windows平台的可执行文件。
-然而，如果你有完整的Airtest环境，那么你将可以仅运行ArkNights.py脚本来工作（当然，image目录是必须的）。
+然而，如果你有完整的Python3 + Airtest环境，那么你将可以仅运行ArkNights.py脚本来工作（当然，image目录是必须的）。
 ## 构建
 安装了pyinstaller，
 ```sh
@@ -36,6 +36,12 @@ pyinstaller ArkNights.spec
  etc.
 
 ## FAQ
+### 关于静默安装的apk
+ RotationWatcher：用于监测屏幕旋转，确保点击位置的正确性。<br>
+ Yosemite：一个没有界面的输入法，用于输入文字（废话）[本项目虽然没有用到这个，但是这是Airtest初始化设备的一部分]。<br><br>
+ 以上两个应用均来源于[Airtest项目](https://airtest.netease.com/)，<br>
+ 且仅在运行有用。强迫症患者可以写一个脚本退出时自动卸载。
+ 
 ### 在使用中出现问题？
 请先尝试理解如下知识：<br>
 >[adb](https://developer.android.com/studio/command-line/adb?hl=zh-cn)连接方式<br>

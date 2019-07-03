@@ -146,7 +146,7 @@ def done_task():
     touch(Template("image/tpl1561945262063.png", record_pos=(0.121, 0.161), resolution=(2160, 1080)))
     done_tab()
     # 周常
-    touch(Template(r"tpl1562141815104.png", record_pos=(0.139, -0.225), resolution=(2160, 1080)))
+    touch(Template("image/tpl1562141815104.png", record_pos=(0.139, -0.225), resolution=(2160, 1080)))
     done_tab()
 
 
