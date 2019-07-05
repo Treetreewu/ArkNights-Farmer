@@ -25,14 +25,15 @@ pyinstaller ArkNights.spec
 对于Windows以外的其他平台，**理论上**只需要在airtest\core\android\static\adb\添加对应平台的[adb binary](https://github.com/AirtestProject/Airtest/tree/master/airtest/core/android/static/adb)即可。（这里为了减少体积，没有搞进去）<br><br>
 如果想要修改构建参数，请参考[pyinstaller文档](https://www.pyinstaller.org/documentation.html)。
 ## 已知问题
-收取任务时，如果奖励已经领完，而任务未领完，仍有可能被识别到，导致死循环在这。（没试过究竟会不会，也懒得修了）<br>
-主线任务 和 另一个忘了叫啥的任务 的自动领取还**没有实现**。
+~~收取任务时，如果奖励已经领完，而任务未领完，仍有可能被识别到，导致死循环在这。（没试过究竟会不会，也懒得修了）~~(已修复)<br>
+~~主线任务和~~见习任务的自动领取还**没有实现**。
 ## TODO
 >制造站收取 和 贸易站交付<br>
  信赖收集（不知道怎么搞，难顶）<br>
- 收集线索<br>
+ 线索收集<br>
+ 信用收集（没必要）<br>
  干员进驻调整<br>
- 公开招募自动[选标签](http://wiki.joyme.com/arknights/%E5%B9%B2%E5%91%98%E6%95%B0%E6%8D%AE%E8%A1%A8)（联络？）<br>
+ 公开招募智能[选标签](http://wiki.joyme.com/arknights/%E5%B9%B2%E5%91%98%E6%95%B0%E6%8D%AE%E8%A1%A8)（联络？）<br>
  etc.
 
 ## FAQ
@@ -46,7 +47,7 @@ pyinstaller ArkNights.spec
 请先尝试理解如下知识：<br>
 >[adb](https://developer.android.com/studio/command-line/adb?hl=zh-cn)连接方式<br>
  好友[基♂建](http://wiki.joyme.com/arknights/%E5%9F%BA%E5%BB%BA)<br>
- [养驴技术](https://item.jd.com/39923508902.html)
+ [~~养驴技术~~](https://item.jd.com/39923508902.html)
 ### 没有电脑？
 对于想要单手机运行的用户，请修改部分代码并用[Firebase打包](https://airtest.netease.com/docs/docs_AirtestIDE-zh_CN/8_plugins/1_firebase.html)（执行需要adb或root权限。）<br>
 如果可以pull一个更好，我代表有需要的人感谢你：谢谢你，刀库塔！
