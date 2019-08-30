@@ -80,10 +80,23 @@ def farm():
     if limit <= 0:
         limit = 65535
 
+    event = False
     input("请把游戏置于要刷的图的地方，记得打开代理指挥。（按回车键开始）\n")
     for count in range(limit):
         print('\r', f"(。・∀・)ノ[{count + 1}]", end='', flush=True)
-        utils.touch_image("start0", record_pos=(0.421, 0.201), resolution=(2160, 1080))
+        if not utils.try_touch("start0", record_pos=(0.421, 0.201)):
+            utils.try_touch("start0_event", record_pos=(0.4, 0.2))
+        # if count == 0:
+        #     if not utils.try_touch("start0", record_pos=(0.421, 0.201), resolution=(2160, 1080)):
+        #         event = True
+        #         print(event)
+        #         utils.try_touch("start0_event", record_pos=(0.4, 0.2))
+        # else:
+        #     print(event)
+        #     if event:
+        #         utils.try_touch("start0_event", record_pos=(0.4, 0.2))
+        #     else:
+        #         utils.try_touch("start0", record_pos=(0.421, 0.201), resolution=(2160, 1080))
         sleep(2)
         try:
             utils.touch_image("start1", record_pos=(0.316, 0.101))
