@@ -26,14 +26,10 @@ pyinstaller ArkNights.spec
 对于Windows以外的其他平台，**理论上**只需要在airtest\core\android\static\adb\添加对应平台的[adb binary](https://github.com/AirtestProject/Airtest/tree/master/airtest/core/android/static/adb)即可。（这里为了减少体积，没有搞进去）<br><br>
 如果想要修改构建参数，请参考[pyinstaller文档](https://www.pyinstaller.org/documentation.html)。
 ## 已知问题
-~~收取任务时，如果奖励已经领完，而任务未领完，仍有可能被识别到，导致死循环在这。（没试过究竟会不会，也懒得修了）~~(已修复)<br>
-~~主线任务和~~见习任务的自动领取还**没有实现**。
-浮动通知有时会挡住点击的位置，建议开始前打开勿扰模式或关闭浮动通知。
+见习任务的自动领取还**没有实现**。
+浮动通知有时(小概率)会挡住点击的位置，建议开始前打开勿扰模式或关闭浮动通知。
 ## TODO
->~~制造站收取~~ 和 贸易站交付<br>
- ~~信赖收集~~（已实现）<br>
- 线索收集（其实也没必要）<br>
- 信用收集（没必要）<br>
+>线索收集（其实也没必要）<br>
  干员进驻调整<br>
  公开招募智能[选标签](http://wiki.joyme.com/arknights/%E5%B9%B2%E5%91%98%E6%95%B0%E6%8D%AE%E8%A1%A8)（联络？）<br>
  etc.

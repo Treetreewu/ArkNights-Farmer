@@ -2,8 +2,7 @@ import os
 import sys
 import time
 
-from airtest.core.api import sleep, touch, Template, exists
-
+from airtest.core.api import sleep, touch, Template, exists as airtest_exists, wait as airtest_wait
 
 BACK_POS = None
 HOME_POS = None
@@ -32,33 +31,27 @@ def go_home(in_gay=False):
         ]
     sleep(0.5)
     if in_gay:
-        pos = exists(Template(resource_path("image/confirm.png"), record_pos=(0.176, 0.1), resolution=(2160, 1080)))
+        pos = exists("confirm", record_pos=(0.176, 0.1))
         if pos:
             touch(pos)
         sleep(5)
 
 
-def touch_image(image, record_pos=None, resolution=(2160, 1080)):
-    return touch(Template(resource_path(f"image/{image}.png"), record_pos=record_pos, resolution=resolution))
+def wait(image, timeout=None, interval=0.5, intervalfunc=None, resolution=(2160, 1080), **kwargs):
+    airtest_wait(Template(resource_path(f"image/{image}.png"), **kwargs),
+                 timeout=timeout, interval=interval, intervalfunc=intervalfunc)
 
 
-def exist_at_home(image, record_pos=None, resolution=(2160, 1080)):
-    template = Template(resource_path(f"image/{image}.png"), record_pos=record_pos, resolution=resolution)
-    pos = exists(template)
-    if not pos:
-        try:
-            go_home(True)
-            pos = exists(template)
-        except:
-            pass
-    if not pos:
-        print("放在主页哦~亲。")
-        return None
-    return pos
+def exists(image, resolution=(2160, 1080), **kwargs):
+    return airtest_exists(Template(resource_path(f"image/{image}.png"), resolution=resolution, **kwargs))
 
 
-def try_touch(image, record_pos=None, resolution=(2160, 1080), wait=0):
-    pos = exists(Template(resource_path(f"image/{image}.png"), record_pos=record_pos, resolution=resolution))
+def touch_image(image, resolution=(2160, 1080), **kwargs):
+    return touch(Template(resource_path(f"image/{image}.png"), resolution=resolution, **kwargs))
+
+
+def try_touch(image, resolution=(2160, 1080), wait=0, **kwargs):
+    pos = exists(image, resolution, **kwargs)
     if pos:
         time.sleep(wait)
         touch(pos)
@@ -84,3 +77,14 @@ def resource_path(relative_path):
 #             break
 #         except:
 #             task = input("别闹，请重新输入：")
+#     return task
+
+class StringUtils:
+    @staticmethod
+    def parse_net_adb(ip):
+        ip = ip.replace("：", ":")
+        if ":" not in ip:
+            ip += ":5555"
+        return ip
+
+

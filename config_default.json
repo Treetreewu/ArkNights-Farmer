@@ -1,0 +1,1 @@
+{"version": "2.0.0", "customized": [], "scheduled": [{"time": "0800", "tasks": [{"task": "farm", "config": {"map": "1-7", "times": 21}}, {"task": ""}]}], "net_devices": ["172.17.11.162:2333"], "skin": "Default", "devices": ["Z2 Plus (1884b219)"], "last_device": null}

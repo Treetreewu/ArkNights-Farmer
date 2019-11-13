@@ -65,6 +65,7 @@ Site: https://github.com/Treetreewu/ArkNights-Farmer
 啊...                          库奈次。
 """
 
+
 ST.FIND_TIMEOUT = 5
 BACK_POS = None
 HOME_POS = None
@@ -80,24 +81,12 @@ def farm():
     if limit <= 0:
         limit = 65535
 
-    event = False
     input("请把游戏置于要刷的图的地方，记得打开代理指挥。（按回车键开始）\n")
     for count in range(limit):
         print('\r', f"(。・∀・)ノ[{count + 1}]", end='', flush=True)
         if not utils.try_touch("start0", record_pos=(0.421, 0.201)):
             utils.try_touch("start0_event", record_pos=(0.4, 0.2))
-        # if count == 0:
-        #     if not utils.try_touch("start0", record_pos=(0.421, 0.201), resolution=(2160, 1080)):
-        #         event = True
-        #         print(event)
-        #         utils.try_touch("start0_event", record_pos=(0.4, 0.2))
-        # else:
-        #     print(event)
-        #     if event:
-        #         utils.try_touch("start0_event", record_pos=(0.4, 0.2))
-        #     else:
-        #         utils.try_touch("start0", record_pos=(0.421, 0.201), resolution=(2160, 1080))
-        sleep(2)
+        sleep(3)
         try:
             utils.touch_image("start1", record_pos=(0.316, 0.101))
         except Exception as e:
@@ -121,11 +110,12 @@ def farm():
                 pos = wait(Template(utils.resource_path("image/upgrade.png"), record_pos=(-0.15, 0.011), resolution=(2160, 1080)), timeout=1)
                 sleep(3)
                 touch(pos)
-                input("升级辣，请选图。（按回车键继续）")
             except:
                 pass
             utils.try_touch("update_proxy", record_pos=(-0.292, -0.008))
+        sleep(3)
     print()
+
 
 def recruit():
     print("干员招募中...")
