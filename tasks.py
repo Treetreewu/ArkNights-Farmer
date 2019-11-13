@@ -8,36 +8,55 @@ from threading import Thread
 from configurator import s
 
 ST.FIND_TIMEOUT = 5
-BACK_POS = None
-HOME_POS = None
-SKIP_POS = None
+
+POSITION_CACHE = {}
 
 
 class Navigator:
+    MAPS = "maps"
     HOME = "home"
-    GAY = "gay"
+    GAY = "poke_wife"
     RECRUIT = "recruit"
     TASK = "tasks"
+    GAY_FRIENDS = "gay"
 
     @staticmethod
     def goto_screen(screen):
-        global HOME_POS
+        global POSITION_CACHE
         # do nothing if at home, else show menu
         home_icon_pos = utils.exists("home_icon", record_pos=(-0.312, -0.223))
         if home_icon_pos:
             touch(home_icon_pos)
 
         if screen == Navigator.HOME:
-            if HOME_POS:
-                touch(HOME_POS)
+            utils.cached_touch("home", POSITION_CACHE, record_pos=(-0.38, -0.088))
+        elif screen == Navigator.GAY_FRIENDS:
+            if home_icon_pos:
+                pass
             else:
-                HOME_POS = utils.touch_image("home", record_pos=(-0.38, -0.088))
-        elif screen == Navigator.GAY:
-            pass
+                utils.touch_image("friends", record_pos=(-0.246, 0.15))
+            utils.touch_image("friend_list", record_pos=(-0.415, -0.096))
+            utils.touch_image("gay_friends", record_pos=(0.184, -0.133))
         elif screen == Navigator.RECRUIT:
-            pass
+            if home_icon_pos:
+                pass
+            else:
+                utils.touch_image("recruit", record_pos=(0.295, 0.109))
         elif screen == Navigator.TASK:
-            pass
+            if home_icon_pos:
+                pass
+            else:
+                utils.touch_image("task", record_pos=(0.121, 0.161))
+        elif screen == Navigator.GAY:
+            if home_icon_pos:
+                pass
+            else:
+                utils.touch_image("gay", record_pos=(0.285, 0.176))
+        elif screen == Navigator.MAPS:
+            if home_icon_pos:
+                pass
+            else:
+                pass
 
         sleep(0.5)
         if utils.try_touch("confirm", record_pos=(0.176, 0.1)):
@@ -47,11 +66,19 @@ class Navigator:
     def goto_map(map_):
         """
         goto certain map and select auto command.
-        :param map_:
+        :param map_: 1-7
         :return:
         """
+        Navigator.goto_screen(Navigator.MAPS)
         # TODO
         pass
+
+    @staticmethod
+    def at_home():
+        if utils.exists("home_icon", record_pos=(-0.312, -0.223)):
+            return False
+        else:
+            return True
 
 
 def farm(status, map_=None, times=None, auto_drink=False, auto_eat=False, **kwargs):
@@ -72,8 +99,8 @@ def farm(status, map_=None, times=None, auto_drink=False, auto_eat=False, **kwar
     for count in range(limit):
         status.set_status(status.RUNNING, TASKS["farm"]["str"].format(times=f"{count+1}/{times}"))
         print('\r', f"(。・∀・)ノ[{count + 1}]", end='', flush=True)
-        if not utils.try_touch("start0", record_pos=(0.421, 0.201)):
-            utils.try_touch("start0_event", record_pos=(0.4, 0.2))
+        if not utils.cached_try_touch("start0", POSITION_CACHE, record_pos=(0.421, 0.201)):
+            utils.cached_try_touch("start0_event", POSITION_CACHE, record_pos=(0.4, 0.2))
         sleep(3)
         if not utils.try_touch("start1", record_pos=(0.316, 0.101)):
             pos = utils.exists("cancel", record_pos=(-0.269, 0.123))
@@ -108,17 +135,11 @@ def recruit(**kwargs):
     print("干员招募中...")
     Navigator.goto_screen(Navigator.RECRUIT)
     while True:
-        pos = utils.exists("hire")
-        global SKIP_POS
-        if pos:
-            touch(pos)
+        if utils.try_touch("hire"):
             sleep(3)
-            if SKIP_POS:
-                touch(SKIP_POS)
-            else:
-                SKIP_POS = utils.touch_image("skip", record_pos=(0.459, -0.22))
+            pos = utils.cached_touch("skip", POSITION_CACHE, record_pos=(0.459, -0.22))
             sleep(4)
-            touch(SKIP_POS)
+            touch(pos)
         else:
             break
 
@@ -138,15 +159,13 @@ def done_task(**kwargs):
                 if main_line:
                     touch(pos)
             elif last_pos:
-                # 兼容领取奖励的点击。
+                # receive bonus perhaps
                 touch(last_pos)
                 last_pos = None
             else:
-                # 是真的没了。
                 break
 
     print("任务收集中...")
-    # 进入任务页
     Navigator.goto_screen(Navigator.TASK)
     # daily or event
     done_tab()
@@ -162,8 +181,6 @@ def done_task(**kwargs):
 def gay_friends(**kwargs):
     print("正在与好友基♂健...")
     Navigator.goto_screen(Navigator.GAY)
-    utils.touch_image("friend_list", record_pos=(-0.415, -0.096))
-    utils.touch_image("gay_friends", record_pos=(0.184, -0.133))
     sleep(5)
     while True:
         pos = utils.try_touch("gay_next", record_pos=(0.433, 0.183))
@@ -180,14 +197,10 @@ def poke_wife(**kwargs):
         while utils.try_touch("deliver"):
             sleep(2)
 
-    pos = utils.exist_at_home("gay", record_pos=(0.285, 0.176))
-    if not pos:
-        return
-    else:
-        touch(pos)
-        sleep(5)
+    Navigator.goto_screen(Navigator.GAY)
+
     # notification
-    if utils.try_touch("notification", record_pos=(0.444, -0.184)):
+    if utils.try_touch("notification", record_pos=(0.444, -0.184), rgb=True):
         sleep(2)
     else:
         return

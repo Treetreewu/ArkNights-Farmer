@@ -19,23 +19,6 @@ def press_back(times):
         sleep(0.5)
 
 
-def go_home(in_gay=False):
-    global HOME_POS
-    if HOME_POS and False:
-        touch(HOME_POS[0])
-        touch(HOME_POS[1])
-    else:
-        HOME_POS = [
-            touch_image("home_icon", record_pos=(-0.312, -0.223)),
-            touch_image("home", record_pos=(-0.38, -0.088))
-        ]
-    sleep(0.5)
-    if in_gay:
-        pos = exists("confirm", record_pos=(0.176, 0.1))
-        if pos:
-            touch(pos)
-        sleep(5)
-
 
 def wait(image, timeout=None, interval=0.5, intervalfunc=None, resolution=(2160, 1080), **kwargs):
     airtest_wait(Template(resource_path(f"image/{image}.png"), **kwargs),
@@ -46,12 +29,43 @@ def exists(image, resolution=(2160, 1080), **kwargs):
     return airtest_exists(Template(resource_path(f"image/{image}.png"), resolution=resolution, **kwargs))
 
 
+def cached_try_touch(image, cache_dict, wait=0, **kwargs):
+    """
+    try touch with cached position.
+    :param image: str
+    :param cache_dict:
+    :param kwargs:
+    :return:
+    """
+
+    if cache_dict.get(image):
+        return touch(cache_dict[image])
+    else:
+        cache_dict[image] = try_touch(image, wait, **kwargs)
+        return cache_dict[image]
+
+
+def cached_touch(image, cache_dict, **kwargs):
+    """
+    touch with cached position.
+    :param image: str
+    :param cache_dict:
+    :param kwargs:
+    :return:
+    """
+    if cache_dict.get(image):
+        return touch(cache_dict[image])
+    else:
+        cache_dict[image] = touch_image(image, **kwargs)
+        return cache_dict[image]
+
+
 def touch_image(image, resolution=(2160, 1080), **kwargs):
     return touch(Template(resource_path(f"image/{image}.png"), resolution=resolution, **kwargs))
 
 
-def try_touch(image, resolution=(2160, 1080), wait=0, **kwargs):
-    pos = exists(image, resolution, **kwargs)
+def try_touch(image, wait=0, **kwargs):
+    pos = exists(image, **kwargs)
     if pos:
         time.sleep(wait)
         touch(pos)
