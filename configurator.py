@@ -50,13 +50,13 @@ class Configurator:
         self.config["skin"] = self.skin.__name__
 
         with open(CONFIG_PATH, "w") as file:
-            json.dump(self.config, file)
+            json.dump(self.config, file, ensure_ascii=False)
 
     def export(self):
         file = filedialog.asksaveasfile(filetypes=[("JSON", ".json")], defaultextension=".json")
         if file is not None:
             self.save()
-            json.dump(self.config, file)
+            json.dump(self.config, file, ensure_ascii=False)
 
     def import_(self):
         if messagebox.askokcancel("导入配置", "导入将覆盖现有配置，确定吗？"):

@@ -32,6 +32,6 @@ exe = EXE(pyz,
           strip=False,
           upx=True,
           runtime_tmpdir=None,
-          console=False,
+          console=True,
           icon='image/gui/sora.ico'
           )
