@@ -30,14 +30,19 @@ class BaseStrings:
     use_drone = "自动使用无人机加速"
     running = "执行中 {task}"
     ready = "就绪"
-    input_wrong = "输入有误嗷。"
+    error_input = "输入有误嗷。"
+    error_reason_run_out = ""
+    error_task_running = "当前正在运行任务嗷。"
+    error_device_fail = "设备初始化失败，重新连接试试。"
+    error_no_device = "没设备嗷。"
     delete = "删除"
     start = "开始"
     drone_produce = "加速制造"
     drone_bill = "加速订单"
     gold = "赤金"
-    record = "作战记录"
+    record = "中级作战记录"
     stone_debris = "源石碎片"
+    reason_run_out = ""
 
 
 

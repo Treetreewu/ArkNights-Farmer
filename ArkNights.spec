@@ -3,32 +3,35 @@
 block_cipher = None
 
 
-a = Analysis(['ArkNights.py'],
-             pathex=['C:\\Users\\Treewu\\Desktop\\untitled.air'],
-             binaries=[],
-             datas=[('image', 'image'), ('airtest', 'airtest')],
-             hiddenimports=[],
-             hookspath=[],
-             runtime_hooks=[],
-             excludes=[],
-             win_no_prefer_redirects=False,
-             win_private_assemblies=False,
-             cipher=block_cipher,
-             noarchive=False)
-pyz = PYZ(a.pure, a.zipped_data,
-             cipher=block_cipher)
+a = Analysis(
+    ['ArkNights.py'],
+    pathex=[],
+    binaries=[
+    ('config.json', "."),
+    ('config_default.json', "."),
+    ],
+    datas=[('image', 'image'), ('airtest', 'airtest')],
+    hiddenimports=['tkinter'],
+    hookspath=[],
+    runtime_hooks=[],
+    excludes=[],
+    win_no_prefer_redirects=False,
+    win_private_assemblies=False,
+    cipher=block_cipher,
+    noarchive=False)
+pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 exe = EXE(pyz,
           a.scripts,
           a.binaries,
           a.zipfiles,
           a.datas,
           [],
-          name='ArkNights',
+          name='ArkNights Farmer',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
           runtime_tmpdir=None,
-          console=True,
-          icon='icon.ico'
+          console=False,
+          icon='image/gui/sora.ico'
           )

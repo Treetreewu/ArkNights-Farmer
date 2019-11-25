@@ -16,7 +16,7 @@ from threading import Thread
 
 from skins import ENABLED_SKINS
 from tasks import TasksRunner, TASKS, TaskRunningError, DeviceError
-from utils import StringUtils
+from utils import StringUtils, resource_path
 
 
 class DragDropListbox(tk.Listbox):
@@ -257,6 +257,13 @@ class DonationWindow(BaseDialogWindow):
     def __init__(self, parent, **kwargs):
         super().__init__(parent, **kwargs)
         self.tk.title(s.donate_title)
+        from PIL import Image, ImageTk
+        wechat_qr_png = ImageTk.PhotoImage(Image.open("./image/gui/wechat_qr.png"))
+        alipay_qr_png = ImageTk.PhotoImage(Image.open("./image/gui/alipay_qr.png"))
+        self.wechat_qr = tk.Label(self.tk, image=wechat_qr_png).pack(side=tk.LEFT)
+        self.alipay_qr = tk.Label(self.tk, image=alipay_qr_png).pack(side=tk.LEFT)
+        self.wechat_qr.image = wechat_qr_png
+        self.alipay_qr.image = alipay_qr_png
 
 
 class BaseFrame:
@@ -352,17 +359,19 @@ class CustomTaskFrame(BaseFrame):
         if self.selection is None:
             return
 
-        serial_number = re.search("\\((.*?)\\)", self.parent.bottom_bar.device_menu_var.get()).group(1)
+        try:
+            serial_number = re.search("\\((.*?)\\)$", self.parent.bottom_bar.device_menu_var.get()).group(1)
+        except:
+            messagebox.showerror(s.error, s.error_no_device)
+            return
         try:
             TasksRunner(
                 serial_number,
                 self.parent.task.task_list.list,
                 self.parent.status
             ).run()
-        except TaskRunningError:
-            messagebox.showerror(s.error, "当前正在运行任务嗷。")
-        except DeviceError:
-            messagebox.showerror(s.error, "设备初始化失败，重新连接试试。")
+        except Exception as e:
+            messagebox.showerror(s.error, e.__str__())
 
 
 class TaskFrame(BaseFrame):
@@ -470,7 +479,8 @@ class MenuBar:
         self.about_menu.add_command(label=s.github, command=lambda: open_with_browser(s.github_url))
 
         self.tk.add_cascade(label="文件", menu=self.file_menu)
-        self.tk.add_cascade(label="皮肤", menu=self.skin_menu)
+        # TODO change skin.
+        # self.tk.add_cascade(label="皮肤", menu=self.skin_menu)
         self.tk.add_cascade(label="关于", menu=self.about_menu)
 
 
@@ -479,8 +489,10 @@ class MainWindow:
         self.adb = ADB()
         self.tk = tk.Tk()
         self.tk.title(s.title)
+        # self.icon = tk.PhotoImage(file=resource_path("image/gui/sora.png"))
+        self.tk.iconbitmap(resource_path("image/gui/sora.ico"))
         # self.tk.geometry('500x300')
-        self.status = Status(self.tk)
+        self.status = Status(self)
 
         # menu bar
         self.menu_bar = MenuBar(self)
@@ -516,9 +528,11 @@ class Status:
     LOADING = 0
     READY = 1
     RUNNING = 2
+    ERROR = 3
 
     def __init__(self, parent):
-        self.status_var = tk.StringVar(parent, s.loading)
+        self.parent = parent
+        self.status_var = tk.StringVar(parent.tk, s.loading)
 
     def __str__(self):
         return self.status_var.get()
@@ -533,12 +547,19 @@ class Status:
             if not kwargs:
                 kwargs["task"] = ""
             self.status_var.set(s.running.format(**kwargs))
+        elif status == self.ERROR:
+            self.status_var.set(s.error)
+            try:
+                Cache.running.thread.join()
+            except Exception:
+                messagebox.showerror(s.error, Cache.message)
 
 
 class Cache:
     # tasks.
     running = None
     devices = []
+    message = ""
 
 
 if __name__ == '__main__':

@@ -1,12 +1,12 @@
 import json
 import os
 from tkinter import filedialog, messagebox
-
+from utils import resource_path
 import skins
 
-CONFIG_PATH = "config.json"
-DEFAULT_CONFIG_PATH = "config_default.json"
-BROKEN_CONFIG_PATH = "config_broken.json"
+CONFIG_PATH = resource_path("config.json")
+DEFAULT_CONFIG_PATH = resource_path("config_default.json")
+BROKEN_CONFIG_PATH = resource_path("config_broken.json")
 
 
 class Configurator:
