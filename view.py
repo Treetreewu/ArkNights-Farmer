@@ -121,7 +121,7 @@ class FarmTaskWindow(BaseDialogWindow):
         self.auto_eat = ttk.Checkbutton(self.tk, text=s.auto_eat, variable=self.auto_eat_var)
         self.button = ttk.Button(self.tk, text=s.ok, command=self.on_submit)
 
-        self.map_.pack(padx=10, pady=(15, 0))
+        # self.map_.pack(padx=10, pady=(15, 0))
         self.auto_drink.pack(padx=10, pady=(10, 0))
         self.auto_eat.pack(padx=10, pady=(10, 0))
         self.times.pack(side=tk.LEFT, padx=(20, 10), pady=10)
@@ -258,12 +258,14 @@ class DonationWindow(BaseDialogWindow):
         super().__init__(parent, **kwargs)
         self.tk.title(s.donate_title)
         from PIL import Image, ImageTk
-        wechat_qr_png = ImageTk.PhotoImage(Image.open("./image/gui/wechat_qr.png"))
-        alipay_qr_png = ImageTk.PhotoImage(Image.open("./image/gui/alipay_qr.png"))
-        self.wechat_qr = tk.Label(self.tk, image=wechat_qr_png).pack(side=tk.LEFT)
-        self.alipay_qr = tk.Label(self.tk, image=alipay_qr_png).pack(side=tk.LEFT)
+        wechat_qr_png = ImageTk.PhotoImage(Image.open(resource_path("image/gui/wechat_qr.png")))
+        alipay_qr_png = ImageTk.PhotoImage(Image.open(resource_path("image/gui/alipay_qr.png")))
+        self.wechat_qr = tk.Label(self.tk, image=wechat_qr_png)
+        self.alipay_qr = tk.Label(self.tk, image=alipay_qr_png)
         self.wechat_qr.image = wechat_qr_png
         self.alipay_qr.image = alipay_qr_png
+        self.wechat_qr.pack(side=tk.LEFT)
+        self.alipay_qr.pack()
 
 
 class BaseFrame:
