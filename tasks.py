@@ -104,11 +104,13 @@ def farm(status, map_=None, times=None, auto_drink=False, auto_eat=False, **kwar
         if drink:
             if not utils.exists("stone_large"):
                 utils.touch_image("ok2")
+                time.sleep(4)
                 return
         if eat:
             utils.try_touch("use_stone")
             if utils.exists("stone_large"):
                 utils.touch_image("ok2")
+                time.sleep(4)
                 return
 
     if map_:
@@ -130,8 +132,7 @@ def farm(status, map_=None, times=None, auto_drink=False, auto_eat=False, **kwar
             pos = utils.exists("cancel1")
             if pos:
                 add_reason(auto_drink, auto_eat)
-                if utils.exists("cancel1"):
-                    touch(pos)
+                if utils.try_touch("cancel1"):
                     return
                 # restart
                 if not utils.cached_try_touch("start0", POSITION_CACHE):

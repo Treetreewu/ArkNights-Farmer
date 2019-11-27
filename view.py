@@ -253,7 +253,6 @@ class NetADBWindow(BaseDialogWindow):
 
 
 class DonationWindow(BaseDialogWindow):
-    # TODO: add donation QR Code
     def __init__(self, parent, **kwargs):
         super().__init__(parent, **kwargs)
         self.tk.title(s.donate_title)
