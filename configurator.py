@@ -21,7 +21,7 @@ class Configurator:
 
     def load(self, config_path=CONFIG_PATH, init=False):
         def _load(file_path):
-            with open(file_path) as f:
+            with open(file_path, encoding="utf-8") as f:
                 return json.load(f)
         try:
             config = _load(config_path)
@@ -49,7 +49,7 @@ class Configurator:
         # save skin
         self.config["skin"] = self.skin.__name__
 
-        with open(CONFIG_PATH, "w") as file:
+        with open(CONFIG_PATH, "w", encoding="utf-8") as file:
             json.dump(self.config, file, ensure_ascii=False)
 
     def export(self):
