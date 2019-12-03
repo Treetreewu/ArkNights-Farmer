@@ -1,4 +1,5 @@
 # ArkNights-Farmer
+[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 
 ## 介绍
 
@@ -7,11 +8,16 @@
 这位农民是基于[Airtest项目](https://airtest.netease.com/)([GitHub](https://github.com/AirtestProject/Airtest))编写的，release使用[pyinstaller](https://www.pyinstaller.org/)打包。
 目前功能有:
 
-1. 刷图
+1. 刷图（自动使用理智合剂/源石）
 2. 聘用公开招募
 3. 领取已完成的任务
 4. 访问好友基♂建获取信用
 5. 贸易站交付+制造站收取+信赖收取（自动使用无人机）
+
+### 欢迎进群交♂流
+
+[928918804](https://jq.qq.com/?_wv=1027&k=5TUmy9F)
+![qq_group_qr](http://github.com/itmyhome2013/readme_add_pic/raw/master/images/nongshalie.jpg)
 
 ## 运行
 
@@ -76,6 +82,12 @@ Yosemite：一个没有界面的输入法，用于输入文字（废话）[本�
 2. 好友[基♂建](http://wiki.joyme.com/arknights/%E5%9F%BA%E5%BB%BA)
 3. [~~养驴技术~~](https://item.jd.com/39923508902.html)
 
+#### 发现bug
+
+麻烦提个issue或者以其他方式告诉我。
+
+
+
 ### 没有电脑？
 
 对于想要单手机运行的用户，请修改部分代码并用[Firebase打包](https://airtest.netease.com/docs/docs_AirtestIDE-zh_CN/8_plugins/1_firebase.html)（执行需要adb或root权限。）
@@ -84,3 +96,5 @@ Yosemite：一个没有界面的输入法，用于输入文字（废话）[本�
 
 告诉我试试(不一定生效)。
 欢迎Pull Request。
+
+

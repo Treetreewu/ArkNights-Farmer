@@ -1,5 +1,5 @@
 class BaseStrings:
-    version = "V2.0.3"
+    version = "V2.0.5"
     version_sub = ""
     title = f"ArkNights-Farmer {version}{version_sub}"
     hello_title = "注意"
