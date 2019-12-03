@@ -17,7 +17,8 @@
 ### 欢迎进群交♂流
 
 [928918804](https://jq.qq.com/?_wv=1027&k=5TUmy9F)
-![qq_group_qr](http://github.com/itmyhome2013/readme_add_pic/raw/master/images/nongshalie.jpg)
+
+![qq_group_qr](https://github.com/Treetreewu/ArkNights-Farmer/raw/master/image/gui/qqgroup_qr.jpg)
 
 ## 运行
 
