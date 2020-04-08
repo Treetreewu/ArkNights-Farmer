@@ -7,9 +7,10 @@ from copy import deepcopy
 from threading import Thread
 
 from configurator import s
+import logging
 
+logging.getLogger("airtest").setLevel(logging.WARNING)
 ST.FIND_TIMEOUT = 5
-
 POSITION_CACHE = {}
 
 
