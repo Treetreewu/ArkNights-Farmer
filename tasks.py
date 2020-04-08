@@ -216,7 +216,7 @@ def gay_friends(**kwargs):
     Navigator.goto_screen(Navigator.GAY_FRIENDS)
     sleep(5)
     while True:
-        if not utils.try_touch("gay_next"):
+        if not utils.try_touch("gay_next", rgb=True, threshold=0.9):
             break
         sleep(3)
 
