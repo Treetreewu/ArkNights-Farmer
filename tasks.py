@@ -108,9 +108,10 @@ def farm(status, map_=None, times=None, auto_drink=False, auto_eat=False, **kwar
                 time.sleep(4)
                 return
         if eat:
-            utils.try_touch("use_stone")
+            utils.try_touch("use_stone", rgb=True, threshold=0.9)
             if utils.exists("stone_large"):
-                utils.touch_image("ok2")
+                # utils.touch_image("ok2")
+                print("ok2")
                 time.sleep(4)
                 return
 
