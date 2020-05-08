@@ -230,48 +230,50 @@ def poke_wife(drone=None, **kwargs):
     # TODO count passed errors.
     # TODO auto change exhausted.
     errors = []
+
+    # notification
+    sleep(2)
+    if utils.try_touch("notification", rgb=True):
+        sleep(2)
+        # 制造站
+        utils.try_touch("manufacturer")
+        # 信赖
+        utils.try_touch("trust")
+        # 贸易站
+        utils.try_touch("orders")
+
     # auto drone manufacturing
-    if drone and drone.endswith("+"):
-        pos = utils.touch_image("manufacturing_station")
-        while not utils.try_touch("open_up_manufacturing"):
-            touch(pos)
-        for i in range(1, 5):
-            if utils.try_touch(f"0{i}", threshold=0.9) or i == 1:
+    if drone:
+        if drone.endswith("+"):
+            pos = utils.touch_image("manufacturing_station")
+            while not utils.try_touch("open_up_manufacturing"):
+                # 防止刚好生产出来一个新的，导致没点进去。
+                touch(pos)
+            # 假设只有1234
+            for i in range(1, 5):
+                utils.try_touch(f"0{i}", threshold=0.9)
                 utils.cached_touch("max_manufacturing", POSITION_CACHE)
                 utils.cached_try_touch("ok1", POSITION_CACHE)
                 if utils.exists(drone):
                     utils.cached_touch("drone_manufacturing", POSITION_CACHE)
                     utils.cached_touch("max_drone", POSITION_CACHE)
                     utils.cached_touch("ok", POSITION_CACHE)
-            else:
-                break
-        Navigator.go_back(2)
-
-    # notification
-    if utils.try_touch("notification", rgb=True):
-        sleep(2)
-    else:
-        return
-    # 制造站
-    if utils.try_touch("manufacturer"):
-        sleep(1)
-    # 信赖
-    utils.try_touch("trust")
-    # 贸易站
-    utils.touch_image("trade")
-    utils.touch_image("open_up_trade")
-    for i in range(1, 5):
-        if utils.try_touch(f"0{i}", threshold=0.9) or i == 1:
-            while utils.try_touch("deliver"):
-                sleep(2)
-            if drone and drone.endswith("-") and utils.exists(drone):
-                while not utils.exists("0drone", threshold=0.9):
-                    utils.touch_image("drone_trade")
-                    utils.cached_touch("max_drone", POSITION_CACHE)
-                    utils.cached_touch("ok", POSITION_CACHE)
-                    utils.try_touch("deliver")
-        else:
-            break
+                    utils.cached_touch("gather", POSITION_CACHE)
+            Navigator.go_back(2)
+        elif drone.endswith("-"):
+            utils.touch_image("trade")
+            # 防止刚好有新订单，导致没点进去。
+            utils.try_touch("trade")
+            utils.touch_image("open_up_trade")
+            for i in range(1, 5):
+                utils.try_touch(f"0{i}", threshold=0.9)
+                if utils.exists(drone):
+                    while not utils.exists("0drone", threshold=0.9):
+                        utils.touch_image("drone_trade")
+                        utils.cached_touch("max_drone", POSITION_CACHE)
+                        utils.cached_touch("ok", POSITION_CACHE)
+                        utils.try_touch("deliver")
+                    break
 
 
 # for UI

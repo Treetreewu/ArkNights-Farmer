@@ -34,6 +34,7 @@ RECORD_POS = {
     "task_event": (-0.045, -0.225),
     "gay_next": (0.433, 0.183),
     "notification": (0.444, -0.184),
+    "orders": (-0.33, 0.231),
     "open_up_trade": (-0.37, -0.045),
     "open_up_manufacturing": (-0.184, 0.146),
     "01": (-0.472, -0.102),
@@ -69,6 +70,7 @@ RECORD_POS = {
     "cancel1": (0.096, 0.152),
     "ok2": (0.309, 0.152),
     "stone_large": (0.111, -0.023),
+    "gather": (0.393, 0.195),
 
     "maps/annihilation0": (-0.358, -0.013),
     "maps/annihilation1": (0.019, 0.156),
