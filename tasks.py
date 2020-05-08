@@ -9,7 +9,7 @@ from threading import Thread
 from configurator import s
 import logging
 
-logging.getLogger("airtest").setLevel(logging.WARNING)
+logging.getLogger("airtest").setLevel(logging.ERROR)
 ST.FIND_TIMEOUT = 5
 POSITION_CACHE = {}
 
@@ -110,8 +110,7 @@ def farm(status, map_=None, times=None, auto_drink=False, auto_eat=False, **kwar
         if eat:
             utils.try_touch("use_stone", rgb=True, threshold=0.9)
             if utils.exists("stone_large"):
-                # utils.touch_image("ok2")
-                print("ok2")
+                utils.touch_image("ok2")
                 time.sleep(4)
                 return
 
@@ -127,8 +126,8 @@ def farm(status, map_=None, times=None, auto_drink=False, auto_eat=False, **kwar
     for count in range(limit):
         status.set_status(status.RUNNING, task=TASKS["farm"]["str"].format(times=f"{count+1}/{times}"))
         print('\r', f"(。・∀・)ノ[{count + 1}]", end='', flush=True)
-        if not utils.cached_try_touch("start0", POSITION_CACHE):
-            utils.cached_try_touch("start0_event", POSITION_CACHE)
+        if not utils.try_touch("start0"):
+            utils.try_touch("start0_event")
         sleep(3)
         if not utils.try_touch("start1"):
             pos = utils.exists("cancel1")
@@ -137,8 +136,8 @@ def farm(status, map_=None, times=None, auto_drink=False, auto_eat=False, **kwar
                 if utils.try_touch("cancel1"):
                     return
                 # restart
-                if not utils.cached_try_touch("start0", POSITION_CACHE):
-                    utils.cached_try_touch("start0_event", POSITION_CACHE)
+                if not utils.try_touch("start0"):
+                    utils.try_touch("start0_event")
                 sleep(3)
                 utils.touch_image("start1")
             else:
@@ -146,21 +145,21 @@ def farm(status, map_=None, times=None, auto_drink=False, auto_eat=False, **kwar
         sleep(90)
         while True:
             try:
-                pos = utils.wait("over", timeout=20, interval=5)
-                sleep(3)
-                touch(pos)
+                pos_over = utils.wait("over", timeout=20, interval=5)
+                sleep(4)
+                touch(pos_over)
                 break
             except:
                 pass
             try:
-                pos = utils.wait("upgrade", timeout=1)
+                pos_upgrade = utils.wait("upgrade", timeout=1)
                 sleep(3)
-                touch(pos)
+                touch(pos_upgrade)
             except:
                 pass
             utils.try_touch("update_proxy")
             sleep(3)
-        sleep(4)
+        sleep(5)
     print()
 
 

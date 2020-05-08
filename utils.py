@@ -3,6 +3,7 @@ import sys
 import time
 
 from airtest.core.api import sleep, touch, Template, exists as airtest_exists, wait as airtest_wait
+from airtest.core.settings import Settings as ST
 
 RECORD_POS = {
     "back": (-0.441, -0.223),
@@ -86,8 +87,15 @@ def wait(image, timeout=None, interval=1, intervalfunc=None, resolution=(2160, 1
         timeout=timeout, interval=interval, intervalfunc=intervalfunc)
 
 
-def exists(image, resolution=(2160, 1080), **kwargs):
-    return airtest_exists(Template(resource_path(f"image/{image}.png"), resolution=resolution, record_pos=RECORD_POS.get(image), **kwargs))
+def exists(image, resolution=(2160, 1080), timeout=ST.FIND_TIMEOUT_TMP, **kwargs):
+    old_timeout = None
+    if timeout != ST.FIND_TIMEOUT_TMP:
+        old_timeout = ST.FIND_TIMEOUT_TMP
+        ST.FIND_TIMEOUT_TMP = timeout
+    pos = airtest_exists(Template(resource_path(f"image/{image}.png"), resolution=resolution, record_pos=RECORD_POS.get(image), **kwargs))
+    if old_timeout is not None:
+        ST.FIND_TIMEOUT_TMP = old_timeout
+    return pos
 
 
 def cached_try_touch(image, cache_dict, delay=1, wait=0, **kwargs):
