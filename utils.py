@@ -2,8 +2,9 @@ import os
 import sys
 import time
 
-from airtest.core.api import sleep, touch, Template, exists as airtest_exists, wait as airtest_wait
-from airtest.core.settings import Settings as ST
+from airtest.core.api import touch, Template, exists as airtest_exists, \
+    wait as airtest_wait
+from airtest.core.settings import Settings
 
 RECORD_POS = {
     "back": (-0.441, -0.223),
@@ -79,22 +80,30 @@ RECORD_POS = {
 }
 
 
-def wait(image, timeout=None, interval=1, intervalfunc=None, resolution=(2160, 1080), **kwargs):
+def wait(image, timeout=None, interval=1, intervalfunc=None,
+         resolution=(2160, 1080), **kwargs):
     return airtest_wait(
         Template(resource_path(f"image/{image}.png"),
-                 resolution=resolution, record_pos=RECORD_POS.get(image), **kwargs
+                 resolution=resolution, record_pos=RECORD_POS.get(image),
+                 **kwargs
                  ),
         timeout=timeout, interval=interval, intervalfunc=intervalfunc)
 
 
-def exists(image, resolution=(2160, 1080), timeout=ST.FIND_TIMEOUT_TMP, **kwargs):
+def exists(image, resolution=(2160, 1080), timeout=Settings.FIND_TIMEOUT_TMP,
+           **kwargs):
     old_timeout = None
-    if timeout != ST.FIND_TIMEOUT_TMP:
-        old_timeout = ST.FIND_TIMEOUT_TMP
-        ST.FIND_TIMEOUT_TMP = timeout
-    pos = airtest_exists(Template(resource_path(f"image/{image}.png"), resolution=resolution, record_pos=RECORD_POS.get(image), **kwargs))
+    if timeout != Settings.FIND_TIMEOUT_TMP:
+        old_timeout = Settings.FIND_TIMEOUT_TMP
+        Settings.FIND_TIMEOUT_TMP = timeout
+    pos = airtest_exists(Template(
+        resource_path(f"image/{image}.png"),
+        resolution=resolution,
+        record_pos=RECORD_POS.get(image),
+        **kwargs)
+    )
     if old_timeout is not None:
-        ST.FIND_TIMEOUT_TMP = old_timeout
+        Settings.FIND_TIMEOUT_TMP = old_timeout
     return pos
 
 
@@ -107,12 +116,12 @@ def cached_try_touch(image, cache_dict, delay=1, wait=0, **kwargs):
     :param kwargs:
     :return:
     """
-    if cache_dict.get(image):
+    if i := cache_dict.get(image):
         time.sleep(delay)
-        return touch(cache_dict[image])
+        return touch(i)
     else:
-        cache_dict[image] = try_touch(image, wait, **kwargs)
-        return cache_dict[image]
+        i = try_touch(image, wait, **kwargs)
+        return i
 
 
 def cached_touch(image, cache_dict, delay=0.5, **kwargs):
@@ -133,7 +142,9 @@ def cached_touch(image, cache_dict, delay=0.5, **kwargs):
 
 
 def touch_image(image, resolution=(2160, 1080), **kwargs):
-    return touch(Template(resource_path(f"image/{image}.png"), resolution=resolution, record_pos=RECORD_POS.get(image), **kwargs))
+    return touch(
+        Template(resource_path(f"image/{image}.png"), resolution=resolution,
+                 record_pos=RECORD_POS.get(image), **kwargs))
 
 
 def try_touch(image, wait=0.5, **kwargs):

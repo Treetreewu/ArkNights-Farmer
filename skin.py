@@ -45,9 +45,6 @@ class BaseStrings:
     reason_run_out = ""
 
 
-
-
-
 class BaseColors:
     c1 = 100
 

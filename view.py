@@ -14,8 +14,9 @@ from configurator import conf, s
 from multiprocessing import Process, freeze_support
 from threading import Thread
 
-from skins import ENABLED_SKINS
-from tasks import TasksRunner, TASKS, TaskRunningError, DeviceError
+from skin import ENABLED_SKINS
+from task import TasksRunner, TASKS
+from exception import TaskRunningError, DeviceError
 from utils import StringUtils, resource_path
 
 

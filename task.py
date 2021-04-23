@@ -1,13 +1,14 @@
 import time
-import traceback
 
 from airtest.core.api import sleep, touch, connect_device, auto_setup, ST
 import utils
 from copy import deepcopy
 from threading import Thread
 
-from configurator import s
 import logging
+
+from exception import TaskNotFoundError, TaskRunningError, DeviceError, \
+    ReasonRunOutException
 
 logging.getLogger("airtest").setLevel(logging.ERROR)
 ST.FIND_TIMEOUT = 5
@@ -358,25 +359,4 @@ class TasksRunner:
     def run(self):
         self.thread.start()
 
-
-class TaskNotFoundError(Exception):
-    def __init__(self, task):
-        self.task = task
-
-    def __str__(self):
-        return f"{self.task} not in {TASKS.keys()}"
-
-
-class TaskRunningError(Exception):
-    def __str__(self):
-        return s.error_task_running
-
-
-class DeviceError(Exception):
-    pass
-
-
-class ReasonRunOutException(Exception):
-    def __str__(self):
-        return s.error_reason_run_out
 

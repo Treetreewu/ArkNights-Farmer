@@ -2,7 +2,7 @@ import json
 import os
 from tkinter import filedialog, messagebox
 from utils import resource_path
-import skins
+import skin
 
 CONFIG_PATH = resource_path("config.json")
 DEFAULT_CONFIG_PATH = resource_path("config_default.json")
@@ -15,9 +15,9 @@ class Configurator:
 
         # preload skin
         try:
-            self.skin = getattr(skins, self.config.get("skin"))
+            self.skin = getattr(skin, self.config.get("skin"))
         except (AttributeError, TypeError):
-            self.skin = skins.Default
+            self.skin = skin.Default
 
     def load(self, config_path=CONFIG_PATH, init=False):
         def _load(file_path):
