@@ -1,7 +1,7 @@
 class BaseStrings:
-    version = "V2.1.1"
+    version = "2.1.1"
     version_sub = "Beta"
-    title = f"ArkNights-Farmer {version}-{version_sub}"
+    title = f"ArkNights-Farmer V{version}-{version_sub}"
     hello_title = "注意"
     hello_info = "本应用完全免费，如果你通过任何渠道购买获得，就很气。对此，作者建议对贩售人员*龙门粗口*，并威胁他向作者捐赠源石。"
     farm = "刷图"

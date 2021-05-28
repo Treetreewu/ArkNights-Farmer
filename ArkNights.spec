@@ -9,6 +9,7 @@ a = Analysis(
     binaries=[
     ('config.json', "."),
     ('config_default.json', "."),
+    ('recruit_cv/hr.traineddata', 'recruit_cv'),
     ],
     datas=[('image', 'image'), ('airtest', 'airtest')],
     hiddenimports=['tkinter'],

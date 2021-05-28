@@ -1,1 +1,49 @@
-{"version": "2.0.0", "customized": [], "scheduled": [{"time": "0800", "tasks": [{"task": "farm", "config": {"map": "1-7", "times": 21}}, {"task": ""}]}], "net_devices": ["172.17.11.162:2333"], "skin": "Default", "devices": ["Z2 Plus (1884b219)"], "last_device": null}
+{
+  "custom_tasks": [
+    {
+      "name": "默认",
+      "tasks": [
+        {
+          "type": "recruit"
+        }
+      ]
+    },
+    {
+      "name": "日常",
+      "tasks": [
+        {
+          "type": "recruit"
+        },
+        {
+          "type": "done_task"
+        },
+        {
+          "type": "poke_wife",
+          "config": {
+            "drone": "gold-",
+            "comment": "gold+/gold-/stone+/stone-/record+"
+          }
+        },
+        {
+          "type": "gay_friends"
+        }
+      ]
+    },
+    {
+      "name": "刷图",
+      "tasks": [
+        {
+          "type": "done_task"
+        }
+      ]
+    }
+  ],
+  "net_devices": [
+    "172.17.11.162:2333"
+  ],
+  "skin": "Default",
+  "last_device": null,
+  "tesseract": {
+    "path": null
+  }
+}

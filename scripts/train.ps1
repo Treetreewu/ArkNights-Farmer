@@ -1,4 +1,4 @@
-text2image --text dict.txt --font 'Noto Sans CJK SC Regular' --fonts_dir .\fonts\ --outputbase hr.notosans.exp0 --fontconfig_tmpdir ./ --ptsize 25
+text2image --text dicts/hr.txt --font 'Noto Sans CJK SC Regular' --fonts_dir .\fonts\ --outputbase hr.notosans.exp0 --fontconfig_tmpdir ./ --ptsize 25
 
 
 tesseract hr.notosans.exp0.tif hr.notosans.exp0 nobatch box.train

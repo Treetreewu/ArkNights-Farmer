@@ -1,7 +1,4 @@
 import itertools
-import random
-import time
-from collections import defaultdict
 
 POSITION_CACHE = {}
 
@@ -286,4 +283,4 @@ EMPLOYS = {
 }
 
 if __name__ == "__main__":
-    print(" ".join(set(itertools.chain(*TAGS.keys()))))
+    print("".join(set(itertools.chain(*TAGS.keys()))))

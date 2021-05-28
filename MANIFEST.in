@@ -1,0 +1,2 @@
+recursive-include image
+include *.json recruit_cv/*.traineddata

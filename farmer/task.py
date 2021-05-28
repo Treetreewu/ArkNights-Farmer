@@ -176,10 +176,7 @@ def recruit(auto_recruit=True, choosable_over_5=False, **kwargs):
     print("干员招募中...")
 
     def read_tags():
-        result = {}
-        for t in TAGS:
-            if p := utils.exists_now(t):
-                result[t] = p
+
         return result
 
     def count_stars(_tags):

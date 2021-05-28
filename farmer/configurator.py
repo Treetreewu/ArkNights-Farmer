@@ -68,8 +68,9 @@ class Configurator:
             self.load(DEFAULT_CONFIG_PATH)
 
 
-conf = configurator = Configurator()
-s = conf.skin.Strings
+configurator = Configurator()
+conf = configurator.config
+s = configurator.skin.Strings
 
 if __name__ == '__main__':
     print(configurator.skin)

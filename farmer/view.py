@@ -7,7 +7,7 @@ from tkinter import messagebox, ttk, Toplevel
 from airtest.core.android.adb import ADB
 from airtest.core.error import AdbError
 
-from farmer.configurator import conf, s
+from farmer.configurator import conf, configurator, s
 from multiprocessing import freeze_support
 
 from farmer.skin import ENABLED_SKINS
@@ -37,7 +37,7 @@ class DragDropListbox(tk.Listbox):
             for item in right_menu_list:
                 self.popup_menu.add_command(label=item[0], command=item[1])
         self.bind('<B1-Motion>', self.shift_selection)
-        self.bind('<ButtonRelease-1>', conf.save)
+        self.bind('<ButtonRelease-1>', configurator.save)
         self.bind('<Button-3>', self.right_menu)
         self.bind('<Delete>', lambda event: self.menu_delete())
 
@@ -61,7 +61,7 @@ class DragDropListbox(tk.Listbox):
             last = first
         for i in range(first, last + 1):
             self.list.pop(first)
-        conf.save()
+        configurator.save()
 
     @staticmethod
     def item2str(item):
@@ -247,9 +247,9 @@ class NetADBWindow(BaseDialogWindow):
         self.adb.connect()
 
         # TODO: save and restore net adb connection.
-        if self.adb.serialno not in conf.config["net_devices"]:
-            conf.config["net_devices"].append(self.adb.serialno)
-            conf.save()
+        if self.adb.serialno not in conf["net_devices"]:
+            conf["net_devices"].append(self.adb.serialno)
+            configurator.save()
 
         self.destroy()
 
@@ -376,7 +376,7 @@ class CustomTaskFrame(BaseFrame):
     def __init__(self, parent):
         super().__init__(parent)
         self.custom_task_list = DragDropListbox(self.tk,
-                                                conf.config["custom_tasks"],
+                                                conf["custom_tasks"],
                                                 exportselection=0)
         self.custom_task_list.item2str = lambda task: task["name"]
         self.custom_task_list.update_display()
@@ -435,7 +435,7 @@ class TaskFrame(BaseFrame):
     def update(self):
         if self.parent.custom_task.selection is None:
             self.task_list.list = []
-        self.task_list.list = conf.config["custom_tasks"][self.parent.custom_task.selection]["tasks"]
+        self.task_list.list = conf["custom_tasks"][self.parent.custom_task.selection]["tasks"]
         self.task_list.update_display()
 
     def set_done(self):
@@ -492,7 +492,7 @@ class TaskButtonsFrame(BaseFrame):
             self.parent.task_list.list.insert(curselection[0], body)
         else:
             self.parent.task_list.list.append(body)
-        conf.save()
+        configurator.save()
         self.parent.update()
 
 
@@ -506,9 +506,9 @@ class MenuBar:
         self.tk = tk.Menu(parent.tk)
 
         self.file_menu = tk.Menu(self.tk, tearoff=0)
-        self.file_menu.add_command(label="导出配置", command=conf.export)
-        self.file_menu.add_command(label="导入配置", command=conf.import_)
-        self.file_menu.add_command(label="恢复默认配置", command=conf.reset)
+        self.file_menu.add_command(label="导出配置", command=configurator.export)
+        self.file_menu.add_command(label="导入配置", command=configurator.import_)
+        self.file_menu.add_command(label="恢复默认配置", command=configurator.reset)
         self.file_menu.add_separator()
         self.file_menu.add_command(label="退出")
 
@@ -520,7 +520,7 @@ class MenuBar:
                 command=lambda: self.parent.refresh_skin(skin),
                 variable=self.skin_var, value=index
             )
-            if skin.__name__ == conf.config["skin"]:
+            if skin.__name__ == conf["skin"]:
                 self.skin_var.set(index)
 
         self.about_menu = tk.Menu(self.tk, tearoff=0)
@@ -576,7 +576,7 @@ class MainWindow:
         self.tk.mainloop(n)
 
     def refresh_skin(self, skin_class):
-        conf.config["skin"] = skin_class.__name__
+        conf["skin"] = skin_class.__name__
         # TODO: reload conf to change skin.
         # TODO: how to reload window?
 
